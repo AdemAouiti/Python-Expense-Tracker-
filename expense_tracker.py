@@ -1,16 +1,37 @@
 expenses = []
+
 def add_expense():
     description = input("Description: ")
     amount = float(input("Amount: "))
     expenses.append({
-    "description": description,
-    "amount": amount
+        "description": description,
+        "amount": amount
     })
-print("Expense added!")
+    print("Expense added!")
+
 def show_expenses():
     pass
+
 def show_total():
     pass
+
+def delete_expense():
+    if not expenses:
+        print("No expenses to delete.")
+        return
+    for number, expense in enumerate(expenses, start=1):
+        print(f"{number}. {expense['description']}")
+    choice = input("Expense number to delete: ")
+    if not choice.isdigit():
+        print("Invalid expense number.")
+        return
+    index = int(choice) - 1
+    if 0 <= index < len(expenses):
+        removed = expenses.pop(index)
+        print(f"Deleted: {removed['description']}")
+    else:
+        print("Invalid expense number.")
+
 def main():
     while True:
         print("\n===== EXPENSE TRACKER =====")
@@ -18,6 +39,7 @@ def main():
         print("2. View expenses")
         print("3. Show total")
         print("4. Exit")
+        print("5. Delete an expense")
         choice = input("Your choice: ")
         if choice == "1":
             add_expense()
@@ -28,7 +50,10 @@ def main():
         elif choice == "4":
             print("Goodbye!")
             break
+        elif choice == "5":
+            delete_expense()
         else:
             print("Invalid choice.")
+
 if __name__ == "__main__":
     main()
